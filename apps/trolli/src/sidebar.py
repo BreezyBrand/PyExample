@@ -10,17 +10,17 @@ class Sidebar(ft.Container):
         self.nav_rail_visible = True
         self.top_nav_items = [
             ft.NavigationRailDestination(
-                label_content=ft.Text("Boards"),
-                label="Boards",
+                label_content=ft.Text("JSON Projects"),
+                label="JSON Projects",
                 icon=ft.Icons.BOOK_OUTLINED,
                 selected_icon=ft.Icons.BOOK_OUTLINED,
             ),
-            ft.NavigationRailDestination(
-                label_content=ft.Text("Members"),
-                label="Members",
-                icon=ft.Icons.PERSON,
-                selected_icon=ft.Icons.PERSON,
-            ),
+            # ft.NavigationRailDestination(
+            #     label_content=ft.Text("Members"),
+            #     label="Members",
+            #     icon=ft.Icons.PERSON,
+            #     selected_icon=ft.Icons.PERSON,
+            # ),
         ]
 
         self.top_nav_rail = ft.NavigationRail(

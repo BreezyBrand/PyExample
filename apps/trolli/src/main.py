@@ -24,7 +24,7 @@ class TrelloApp(AppLayout):
             leading=ft.Icon(ft.Icons.GRID_GOLDENRATIO_ROUNDED),
             leading_width=100,
             title=ft.Text(
-                f"Trolli",
+                f"Json Parse Project",
                 font_family="Pacifico",
                 size=32,
                 text_align=ft.TextAlign.START,

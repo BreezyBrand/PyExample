@@ -26,7 +26,7 @@ class AppLayout(ft.Row):
                     [
                         ft.Container(
                             ft.Text(
-                                value="Your Boards",
+                                value="Your JSON Projects",
                                 theme_style=ft.TextThemeStyle.HEADLINE_MEDIUM,
                             ),
                             expand=True,
@@ -34,7 +34,7 @@ class AppLayout(ft.Row):
                         ),
                         ft.Container(
                             ft.TextButton(
-                                "Add new board",
+                                "Add new deck",
                                 icon=ft.Icons.ADD,
                                 on_click=self.app.add_board,
                                 style=ft.ButtonStyle(
@@ -56,7 +56,7 @@ class AppLayout(ft.Row):
                 ft.Row(
                     [
                         ft.TextField(
-                            hint_text="Search all boards",
+                            hint_text="Search all JSON Projects",
                             autofocus=False,
                             content_padding=ft.padding.only(left=10),
                             width=200,
@@ -68,7 +68,7 @@ class AppLayout(ft.Row):
                         )
                     ]
                 ),
-                ft.Row([ft.Text("No Boards to Display")]),
+                ft.Row([ft.Text("No JSON Projects to display")]),
             ],
             expand=True,
         )
