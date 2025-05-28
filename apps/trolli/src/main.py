@@ -105,15 +105,19 @@ class TrelloApp(AppLayout):
     def route_change(self, e):
         troute = ft.TemplateRoute(self.page.route)
         if troute.match("/"):
-            self.page.go("/boards")
+            self.page.title="Projects - JSON Parse Project"
+            self.page.go("/boards")        
         elif troute.match("/board/:id"):
             if int(troute.id) > len(self.store.get_boards()):
+                self.page.title=f"Project:{troute.id} - JSON Parse Project"
                 self.page.go("/")
                 return
             self.set_board_view(int(troute.id))
         elif troute.match("/boards"):
+            self.page.title="All Projects - JSON Parse Project"
             self.set_all_boards_view()
         elif troute.match("/members"):
+            self.page.title="Memebers - JSON Parse Project"
             self.set_members_view()
         self.page.update()
 
@@ -134,13 +138,13 @@ class TrelloApp(AppLayout):
             self.page.update()
 
         dialog_text = ft.TextField(
-            label="New Board Name", on_submit=close_dlg, on_change=textfield_change
+            label="New JSON project Name", on_submit=close_dlg, on_change=textfield_change
         )
         create_button = ft.ElevatedButton(
-            text="Create", bgcolor=ft.Colors.BLUE_200, on_click=close_dlg, disabled=True
+            text="Create", on_click=close_dlg, disabled=True
         )
         dialog = ft.AlertDialog(
-            title=ft.Text("Name your new board"),
+            title=ft.Text("Name your new JSON project"),
             content=ft.Column(
                 [
                     dialog_text,

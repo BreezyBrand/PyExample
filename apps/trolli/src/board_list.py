@@ -17,7 +17,8 @@ class BoardList(ft.Container):
         store: DataStore,
         title: str,
         page: ft.Page,
-        color: str = "",
+        rawJson: str,
+        color: str = "",        
     ):
         self.page: ft.Page = page
         self.board_list_id = next(BoardList.id_counter)
@@ -27,8 +28,9 @@ class BoardList(ft.Container):
         self.color = color
         self.items = ft.Column([], tight=True, spacing=4)
         self.items.controls = self.store.get_items(self.board_list_id)
+        
         self.new_item_field = ft.TextField(
-            label="new card name",
+            label="Add new JSON Key",
             height=50,
             bgcolor=ft.Colors.WHITE,
             on_submit=self.add_item_handler,
@@ -58,7 +60,6 @@ class BoardList(ft.Container):
             controls=[
                 ft.Text(
                     value=self.title,
-                    theme_style=ft.TextThemeStyle.TITLE_MEDIUM,
                     text_align=ft.TextAlign.LEFT,
                     overflow=ft.TextOverflow.CLIP,
                     expand=True,
@@ -110,8 +111,8 @@ class BoardList(ft.Container):
                     ft.TextButton(
                         content=ft.Row(
                             [
-                                ft.Icon(ft.Icons.ADD),
-                                ft.Text("add card", color=ft.Colors.BLACK38),
+                                ft.Icon(ft.Icons.ADD, color=ft.Colors.BLACK),
+                                ft.Text("add Key", color=ft.Colors.BLACK38),
                             ],
                             tight=True,
                         ),

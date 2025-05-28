@@ -18,8 +18,11 @@ class Item(ft.Container):
         self.card_item = ft.Card(
             content=ft.Row(
                 [
-                    ft.Container(
-                        content=ft.Checkbox(label=f"{self.item_text}", width=200),
+                    ft.Container(                        
+                        content=ft.Row([
+                          ft.Checkbox(width=25,height=25),
+                          ft.Text(f"{self.item_text}", size=12)
+                        ]),
                         border_radius=ft.border_radius.all(5),
                     )
                 ],

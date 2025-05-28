@@ -8,14 +8,13 @@ class Board(ft.Container):
     id_counter = itertools.count()
 
     def __init__(self, app, store: DataStore, name: str, page: ft.Page):
-        self.page: ft.Page = page
-        self.page.title = "JSON Projects - JSON Parse Project"
+        self.page: ft.Page = page        
         self.board_id = next(Board.id_counter)
         self.store: DataStore = store
         self.app = app
         self.name = name
         self.add_list_button = ft.FloatingActionButton(
-            icon=ft.Icons.ADD, text="add a JSON project", height=30, on_click=self.create_list
+            icon=ft.Icons.ADD, text="Add New JSON", height=30, on_click=self.create_list
         )
 
         self.board_lists = ft.Row(
@@ -88,6 +87,7 @@ class Board(ft.Container):
                     self.store,
                     dialog_text.value,
                     self.page,
+                    json_text.value,
                     color=color_options.data,
                 )
                 self.add_list(new_list)
@@ -101,17 +101,25 @@ class Board(ft.Container):
             self.page.update()
 
         dialog_text = ft.TextField(
-            label="New JSON Project Name", on_submit=close_dlg, on_change=textfield_change
+            label="JSON Source Description", on_submit=close_dlg, on_change=textfield_change
         )
+
+        json_text = ft.TextField(
+            label="Raw JSON", on_submit=close_dlg, on_change=textfield_change, multiline=True
+        )
+
         create_button = ft.ElevatedButton(
             text="Create", on_click=close_dlg, disabled=True
         )
         dialog = ft.AlertDialog(
-            title=ft.Text("Name your new JSON project"),
+            title=ft.Text("JSON Details"),
             content=ft.Column(
                 [
                     ft.Container(
                         content=dialog_text, padding=ft.padding.symmetric(horizontal=5)
+                    ),
+                    ft.Container(
+                        content=json_text, padding=ft.padding.symmetric(horizontal=5)
                     ),
                     color_options,
                     ft.Row(
