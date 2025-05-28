@@ -9,12 +9,13 @@ class Board(ft.Container):
 
     def __init__(self, app, store: DataStore, name: str, page: ft.Page):
         self.page: ft.Page = page
+        self.page.title = "JSON Projects - JSON Parse Project"
         self.board_id = next(Board.id_counter)
         self.store: DataStore = store
         self.app = app
         self.name = name
         self.add_list_button = ft.FloatingActionButton(
-            icon=ft.Icons.ADD, text="add a list", height=30, on_click=self.create_list
+            icon=ft.Icons.ADD, text="add a JSON project", height=30, on_click=self.create_list
         )
 
         self.board_lists = ft.Row(

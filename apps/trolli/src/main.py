@@ -31,7 +31,7 @@ class TrelloApp(AppLayout):
             ),
             center_title=False,
             toolbar_height=75,
-            bgcolor=ft.Colors.LIGHT_BLUE_ACCENT_700,
+            bgcolor=ft.Colors.RED_600,
             actions=[
                 ft.Container(
                     content=ft.PopupMenuButton(items=self.appbar_items),
@@ -63,7 +63,8 @@ class TrelloApp(AppLayout):
         self.page.update()
         # create an initial board for demonstration if no boards
         if len(self.boards) == 0:
-            self.create_new_board("My First Board")
+            #self.create_new_board("JSON")
+            pass
         self.page.go("/")
 
     def login(self, e):
@@ -173,10 +174,10 @@ class TrelloApp(AppLayout):
 
 def main(page: ft.Page):
 
-    page.title = "Flet Trello clone"
+    page.title = "Home - JSON Parse Project"
     page.padding = 0
     page.theme = ft.Theme(font_family="Verdana")
-    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme_mode = ft.ThemeMode.DARK
     page.theme.page_transitions.windows = "cupertino"
     page.fonts = {"Pacifico": "Pacifico-Regular.ttf"}
     page.bgcolor = ft.Colors.BLUE_GREY_200

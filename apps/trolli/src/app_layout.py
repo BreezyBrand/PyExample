@@ -34,7 +34,7 @@ class AppLayout(ft.Row):
                         ),
                         ft.Container(
                             ft.TextButton(
-                                "Add new deck",
+                                "Add new JSON project",
                                 icon=ft.Icons.ADD,
                                 on_click=self.app.add_board,
                                 style=ft.ButtonStyle(

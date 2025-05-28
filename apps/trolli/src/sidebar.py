@@ -28,7 +28,7 @@ class Sidebar(ft.Container):
             label_type=ft.NavigationRailLabelType.ALL,
             on_change=self.top_nav_change,
             destinations=self.top_nav_items,
-            bgcolor=ft.Colors.BLUE_GREY,
+            bgcolor=ft.Colors.BLACK,
             extended=True,
             height=110,
         )
