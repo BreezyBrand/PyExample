@@ -56,8 +56,7 @@ class TrelloApp(AppLayout):
             ft.View(
                 "/",
                 [self.appbar, self],
-                padding=ft.padding.all(0),
-                bgcolor=ft.Colors.BLUE_GREY_200,
+                padding=ft.padding.all(0)
             )
         )
         self.page.update()
@@ -180,7 +179,6 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
     page.theme.page_transitions.windows = "cupertino"
     page.fonts = {"Pacifico": "Pacifico-Regular.ttf"}
-    page.bgcolor = ft.Colors.BLUE_GREY_200
     app = TrelloApp(page, InMemoryStore())
     page.add(app)
     page.update()
