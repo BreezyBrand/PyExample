@@ -1,3 +1,5 @@
-# Flet examples
+# flet-trello-clone
+A clone of trello built with Flet. 
 
-This repository contains Flet sample applications you can use to learn Flet or as a starting point for your own great apps.
+
+Live demo [here](https://flet-trolli.fly.dev/)
