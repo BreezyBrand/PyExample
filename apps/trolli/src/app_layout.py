@@ -13,7 +13,7 @@ class AppLayout(ft.Row):
         self.store: DataStore = store
         self.toggle_nav_rail_button = ft.IconButton(
             icon=ft.Icons.ARROW_CIRCLE_LEFT,
-            icon_color=ft.Colors.BLUE_GREY_400,
+            icon_color=ft.Colors.BLUE_GREY_800,
             selected=False,
             selected_icon=ft.Icons.ARROW_CIRCLE_RIGHT,
             on_click=self.toggle_nav_rail,
@@ -37,11 +37,7 @@ class AppLayout(ft.Row):
                                 "Add new JSON project",
                                 icon=ft.Icons.ADD,
                                 on_click=self.app.add_board,
-                                style=ft.ButtonStyle(
-                                    bgcolor={
-                                        ft.ControlState.DEFAULT: ft.Colors.BLUE_200,
-                                        ft.ControlState.HOVERED: ft.Colors.BLUE_400,
-                                    },
+                                style=ft.ButtonStyle(                                    
                                     shape={
                                         ft.ControlState.DEFAULT: ft.RoundedRectangleBorder(
                                             radius=3

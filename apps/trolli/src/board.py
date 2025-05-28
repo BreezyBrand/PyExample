@@ -101,13 +101,13 @@ class Board(ft.Container):
             self.page.update()
 
         dialog_text = ft.TextField(
-            label="New List Name", on_submit=close_dlg, on_change=textfield_change
+            label="New JSON Project Name", on_submit=close_dlg, on_change=textfield_change
         )
         create_button = ft.ElevatedButton(
-            text="Create", bgcolor=ft.Colors.BLUE_200, on_click=close_dlg, disabled=True
+            text="Create", on_click=close_dlg, disabled=True
         )
         dialog = ft.AlertDialog(
-            title=ft.Text("Name your new list"),
+            title=ft.Text("Name your new JSON project"),
             content=ft.Column(
                 [
                     ft.Container(

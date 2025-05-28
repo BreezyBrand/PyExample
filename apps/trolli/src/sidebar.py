@@ -39,7 +39,7 @@ class Sidebar(ft.Container):
             on_change=self.bottom_nav_change,
             extended=True,
             expand=True,
-            bgcolor=ft.Colors.BLUE_GREY,
+            bgcolor=ft.Colors.BLACK,
         )
         self.toggle_nav_rail_button = ft.IconButton(ft.Icons.ARROW_BACK)
 
@@ -76,7 +76,7 @@ class Sidebar(ft.Container):
             padding=ft.padding.all(15),
             margin=ft.margin.all(0),
             width=250,
-            bgcolor=ft.Colors.BLUE_GREY,
+            bgcolor=ft.Colors.BLACK,
             visible=self.nav_rail_visible,
         )
 
