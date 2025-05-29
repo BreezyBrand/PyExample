@@ -1,5 +1,7 @@
 import itertools
 import flet as ft
+import shutil
+import os
 from board_list import BoardList
 from data_store import DataStore
 
@@ -87,7 +89,7 @@ class Board(ft.Container):
                     self.store,
                     dialog_text.value,
                     self.page,
-                    json_text.value,
+                    selected_files.value,
                     color=color_options.data,
                 )
                 self.add_list(new_list)
@@ -100,12 +102,38 @@ class Board(ft.Container):
                 create_button.disabled = False
             self.page.update()
 
+        def parseFileResult(e: ft.FilePickerResultEvent):
+            if pick_files_dialog.result is not None and pick_files_dialog.result.files is not None:            
+                for f in e.files:
+                    selected_files.value = f.path
+                    dialog_text.value = f.name
+                    try:
+                        if self.app.user is not None:
+                            copyLocation = os.path.join(os.getcwd(),f"apps\\trolli\\uploads\\{self.app.user}\\{f.name}")
+                            #print(copyLocation)
+                            shutil.copy(f.path,copyLocation)
+                            self.update()
+                        else:
+                            selected_files.parent.parent.controls.append(ft.Text("User is not logged in and upload will not be saved."))
+                            self.update()
+                    except Exception as e:
+                        print(f"Error encountered uploading file: {e}")
+
+                create_button.disabled = False
+                self.page.update()
+                dialog_text.update()
+                selected_files.update()
+
         dialog_text = ft.TextField(
             label="JSON Source Description", on_submit=close_dlg, on_change=textfield_change
         )
 
-        json_text = ft.TextField(
-            label="Raw JSON", on_submit=close_dlg, on_change=textfield_change, multiline=True
+        pick_files_dialog = ft.FilePicker(on_result=parseFileResult)
+        selected_files = ft.Text()
+        self.page.overlay.append(pick_files_dialog)
+
+        ft.TextField(
+            label="Raw JSON", height=150,  on_submit=close_dlg, on_change=textfield_change, multiline=True
         )
 
         create_button = ft.ElevatedButton(
@@ -114,12 +142,21 @@ class Board(ft.Container):
         dialog = ft.AlertDialog(
             title=ft.Text("JSON Details"),
             content=ft.Column(
-                [
+                [                    
+                    ft.Container(
+                        ft.ElevatedButton(
+                            "Select file",
+                            icon=ft.Icons.UPLOAD_FILE,
+                            on_click=lambda _: pick_files_dialog.pick_files(
+                                allow_multiple=False
+                            ),
+                        )
+                    ),
                     ft.Container(
                         content=dialog_text, padding=ft.padding.symmetric(horizontal=5)
                     ),
                     ft.Container(
-                        content=json_text, padding=ft.padding.symmetric(horizontal=5)
+                        content=selected_files, padding=ft.padding.symmetric(horizontal=5)
                     ),
                     color_options,
                     ft.Row(

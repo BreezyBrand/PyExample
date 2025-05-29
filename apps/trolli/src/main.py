@@ -1,4 +1,5 @@
 import flet as ft
+import os
 from app_layout import AppLayout
 from board import Board
 from user import User
@@ -7,7 +8,7 @@ from memory_store import InMemoryStore
 from user import User
 
 
-class TrelloApp(AppLayout):
+class JSONApp(AppLayout):
     def __init__(self, page: ft.Page, store: DataStore):
         self.page: ft.Page = page
         self.store: DataStore = store
@@ -51,7 +52,7 @@ class TrelloApp(AppLayout):
             vertical_alignment=ft.CrossAxisAlignment.START,
         )
 
-    def initialize(self):
+    def initialize(self):        
         self.page.views.append(
             ft.View(
                 "/",
@@ -79,6 +80,10 @@ class TrelloApp(AppLayout):
                     self.store.add_user(user)
                 self.user = user_name.value
                 self.page.client_storage.set("current_user", user_name.value)
+                try:
+                    os.mkdir(f"apps\\trolli\\uploads\\{user_name.value}")
+                except FileExistsError:
+                    print("Folder already exists.")
 
             self.page.close(dialog)
             self.appbar_items[0] = ft.PopupMenuItem(
@@ -86,16 +91,17 @@ class TrelloApp(AppLayout):
             )
             self.page.update()
 
-        user_name = ft.TextField(label="User name")
+        user_name = ft.TextField(label="User name",value=self.page.client_storage.get('current_user'))
         password = ft.TextField(label="Password", password=True)
         dialog = ft.AlertDialog(
-            title=ft.Text("Please enter your login credentials"),
+            title=ft.Text("Please login to save your actions:"),
             content=ft.Column(
                 [
                     user_name,
                     password,
-                    ft.ElevatedButton(text="Login", on_click=close_dlg),
+                    ft.ElevatedButton(text="Login", on_click=close_dlg, width=self.app.page.width/3 ),
                 ],
+                horizontal_alignment= ft.CrossAxisAlignment.CENTER,
                 tight=True,
             ),
             on_dismiss=lambda e: print("Modal dialog dismissed!"),
@@ -175,20 +181,19 @@ class TrelloApp(AppLayout):
         self.set_all_boards_view()
 
 
-def main(page: ft.Page):
-
+def main(page: ft.Page):    
     page.title = "Home - JSON Parse Project"
     page.padding = 0
     page.theme = ft.Theme(font_family="Verdana")
     page.theme_mode = ft.ThemeMode.DARK
     page.theme.page_transitions.windows = "cupertino"
     page.fonts = {"Pacifico": "Pacifico-Regular.ttf"}
-    app = TrelloApp(page, InMemoryStore())
+    app = JSONApp(page, InMemoryStore())
     page.add(app)
     page.update()
     app.initialize()
-
+    app.login(ft.ViewPopEvent)
 
 print("flet version: ", ft.version.version)
 print("flet path: ", ft.__file__)
-ft.app(target=main, assets_dir="../assets")
+ft.app(target=main, assets_dir="assets", upload_dir="uploads/{username}/")

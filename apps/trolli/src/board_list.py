@@ -4,6 +4,7 @@ if TYPE_CHECKING:
     from board import Board
 import itertools
 import flet as ft
+import json
 from item import Item
 from data_store import DataStore
 
@@ -17,16 +18,19 @@ class BoardList(ft.Container):
         store: DataStore,
         title: str,
         page: ft.Page,
-        rawJson: str,
+        JsonSource: str,
         color: str = "",        
-    ):
+    ):        
+        if color == "":
+            color= ft.Colors.WHITE60
+        
         self.page: ft.Page = page
-        self.board_list_id = next(BoardList.id_counter)
+        self.board_list_id = next(BoardList.id_counter)        
         self.store: DataStore = store
         self.board = board
         self.title = title
         self.color = color
-        self.items = ft.Column([], tight=True, spacing=4)
+        self.items = ft.Column([], tight=True, spacing=4, height=500, scroll=ft.ScrollMode.ADAPTIVE)
         self.items.controls = self.store.get_items(self.board_list_id)
         
         self.new_item_field = ft.TextField(
@@ -34,7 +38,7 @@ class BoardList(ft.Container):
             height=50,
             bgcolor=ft.Colors.WHITE,
             on_submit=self.add_item_handler,
-        )
+        )        
 
         self.end_indicator = ft.Container(
             bgcolor=ft.Colors.BLACK26,
@@ -150,6 +154,10 @@ class BoardList(ft.Container):
             on_will_accept=self.item_will_drag_accept,
             on_leave=self.item_drag_leave,
         )
+        
+        if JsonSource != "":
+            self.parseJSON(JsonSource)                        
+                
         super().__init__(content=self.view, data=self)
 
     def item_drag_accept(self, e):
@@ -275,3 +283,30 @@ class BoardList(ft.Container):
         controls_list = [x.controls[1] for x in self.items.controls]
         self.items.controls[controls_list.index(item)].controls[0].opacity = opacity
         self.view.update()
+
+    def parseJSON(self, filepath):
+        avail_keys = []
+        if filepath is None:
+            return
+        with open(filepath,'r',encoding="utf8") as file:                
+            for line in file:            
+                try:
+                    all_but_one = str(line[:-2])
+                    jObj = json.loads(all_but_one)
+                    newKeys = jObj.keys()        
+                    for i in newKeys:
+                        if i in avail_keys:
+                            pass
+                        else:
+                            avail_keys.append(i)
+                            #Add list item
+                except Exception as e:
+                    pass
+        #print(avail_keys)        
+        #avail_keys = avail_keys.sort()
+        avail_keys.sort()
+        for k in avail_keys:
+            self.new_item_field.value = k
+            self.add_item()
+        self.new_item_field.value = ""
+        return
